@@ -1,0 +1,138 @@
+<!DOCTYPE html> {% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+    <link rel="image" href="{% static 'logo/logo.png' %}" type="image/png">
+    <link rel="stylesheet" href="{% static 'assets/css/fontawesome.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+    <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <title>Nv Tontine | Register</title>
+    <style>
+        input[type=text],
+        input[type=password],
+        input[type=file],
+        input[type=date],
+        input[type=email] {
+            width: 99%;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-left: 4px;
+            margin-right: 10px;
+            background-color: white;
+            padding: 12px 20px 12px 10px;
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+        }
+
+        input[type=text]:focus {
+            border: 3px solid rgba(6, 201, 226, 0.795);
+        }
+
+        label {
+            padding-left: 4px;
+        }
+
+        input[type=submit],
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            width: 90%;
+            padding: 5px 5px 5px 5px;
+            display: block;
+            justify-content: center;
+        }
+
+        @media screen and (min-width:480px) {
+            .container {
+                width: 50%;
+                padding: 5px 5px 5px 5px;
+                display: block;
+            }
+
+            input {
+
+                margin-right: 10px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <br>
+    <br>
+    {% if messages%} {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{message}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %} {% endif %}
+    <div class="shadow container">
+        <main class="form-signin">
+            <br />
+            <div>
+                <img style="display:block;margin-left:auto;margin-right:auto" class="mb-4"
+                    src="{% static 'logo/logo.png' %}" alt="logo" width="200" height="150">
+
+            </div>
+            <h2 style="text-align: center;">Register To Nv Tontine</h2><br />
+            <form method="POST" class="form-floating ">
+                {% csrf_token %}
+                {% for t in form%}
+                {% if t.label == 'Date of birth' %}
+                <p><label>{{t.label}}</label>
+                    <input type="date" name="date_of_birth" required id="id_date_of_birth">
+                </p>
+                </p>
+                {% else %}
+                <p><label>{{t.label}}</label>
+                    {{t}}</p>
+                {% endif %}
+                {% endfor %}
+                <small class="form-text text-muted">Already Have an account.<a
+                        href="{% url 'login' %}">login</a></small>
+                <br />
+                <b />
+                <input type="submit" value="Register">
+                <!-- <button type="submit" class=""></button> -->
+                <br />
+            </form>
+            <br>
+            <p style="text-align: center;">Copyright<i class="fas fa-copyright"></i>2022</p>
+            <br />
+        </main>
+    </div>
+    <br>
+    <br>
+
+    <br>
+    <script src="{% static 'assets/vendors/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script>
+        $('input').addClass("form-control");
+    </script>
+</body>
+
+</html>
