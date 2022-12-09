@@ -1,0 +1,79 @@
+{% extends 'tontine/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <br>
+    <br>
+    <br />
+    <style>
+        label {
+            display: block;
+        }
+
+        @media screen and (max-width:480px) {
+            p {
+                font-size: 0.8em;
+                display: inline-block;
+            }
+
+            br {
+                height: 0.01em;
+            }
+        }
+    </style>
+
+    {% if notifications %}
+    <h2 class="text-center">Notification</h2>
+    {% for notif in notifications %}
+    <div class="row">
+        <div class="col-2 shadow" style="display: inline-block;background-color:rgb(241, 234, 234);">
+            {% if notif.notification.sender.profile.url %}
+            <a href="{% url 'profile' notif.notification.sender.id %}"><img
+                    src="{{notif.notification.sender.profile.url}}" class="img-fluid center-block"
+                    style="display:flex;margin-left:auto;margin-right: auto;padding:6px;width:100%;heigth:100%"
+                    alt="Norway"></a>
+            {% else %}
+            <img src="{% static 'images/profile.png' %}" class="card-img"
+                style="display:flex;margin-left:auto;margin-right: auto;padding:6px" width="98%">
+            {% endif %}
+        </div>
+        <div class="col-10 shadow" style="border:0.5px solid #ddd;border-radius:1px">
+            <label
+                style="padding:2px 2px 2px 10px;font-weight:bold">{{notif.notification.sender|truncatechars:10}}</label>
+            <label style="padding:2px 2px 2px 10px;">{{notif.notification.msg}}</label>
+            <label style="padding:2px 2px 2px 10px;text-align:right"
+                class="text-muted">{{notif.notification.date}}</label>
+            {% if notif.notification.type_n == 'D' %}
+            <span><a href="#" style="float: right;margin-right:10px;margin-bottom: 10px;" class="btn btn-danger">👎
+                    Refuser</a></span>
+            <span><a href="{{notif.notification.link}}&idnotification={{notif.notification.id}}"
+                    style="float: right;margin-right:10px;margin-bottom: 10px;" class="btn btn-primary">👍
+                    Accepter</a></span>
+            <br />
+            {% endif %}
+
+        </div>
+        <span class="col-1">
+        </span>
+
+    </div>
+    <br style="height: 2px;">
+    {% endfor %}
+    {% else %}
+    <style>
+        .cc {
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+        }
+    </style>
+    <div class="alert alert-success">
+
+        <span class="">Aucune Notification pour le moment</span>
+    </div>
+    <h1></h1>
+    {% endif %}
+</div>
+
+{% endblock %}

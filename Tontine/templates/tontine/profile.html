@@ -1,0 +1,85 @@
+{% extends 'tontine/base.html' %} {% block content %}
+{% load static %}
+<br />
+<br />
+<br />
+<section>
+    <div class="container">
+        <div class="container">
+            <!-- {% if profile.profile.url %}
+            <img style="width:300px;height: 300px;" class="rounded-circle" src="{{profile.profile.url}}" /> {% endif %}
+
+        </div>
+        <h1><span style="font-weight: 600;">Nom : </span>{{profile.username}}</h1>
+        <h1><span style="font-weight: 600;">Prenom : </span>{{profile.surname}}</h1>
+        <h1><span style="font-weight: 600;">Address : </span>{{profile.address}}</h1>
+        <h1><span style="font-weight: 600;">Prenom : </span>{{profile.surname}}</h1>
+
+        <h1><span style="font-weight: 600;">Email : </span><a href="mailto:{{profile.email}}">{{profile.email}}</a></h1> -->
+            <style>
+                #tom {
+                    background-image:url('{{profile.imageURL}}');
+                    background-color: aqua;
+                }
+
+                .k {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    transform: translateY(-960%);
+                    color: #fff;
+                    font-size: 16px;
+                }
+
+                @media screen and (max-width:480px) {
+                    h5 {
+                        font-size: 1rem;
+                    }
+                }
+            </style>
+            <div class="container card">
+                <h1 class="">Profile d'utilisateur</h1>
+
+                <div class="card mb-3" style="max-width: 100%;">
+                    <div class="row no-gutters" style="padding: 10px;">
+                        <div class="col-md-4 w3-display-container" style="padding: 10px;">
+                            {% if profile.profile.url %}
+                            <img src="{{profile.profile.url}}" class="w3-opacity-min" style="width:100%">
+                            {% else %}
+                            <img src="{% static 'images/profile.png' %}" class="w3-opacity-min" style="width:100%">
+                            {% endif %}
+
+                            <div class="w3-display-middle w3-large"><a href="#" style="color:#fff;font-size:64px"
+                                    title="Modifier Ma Photo De Profile"></a>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title">Profile </h5>
+                                <h5><span style="font-weight: 600;">Nom : </span>{{profile.username}}</h5>
+                                <h5><span style="font-weight: 600;">Prenom : </span>{{profile.surname}}</h5>
+                                <h5><span style="font-weight: 600;">Address : </span>{{profile.address}}</h5>
+                                <h5><span style="font-weight: 600;">Numero Telephone : </span>{{profile.telephone}}</h5>
+                                <h5><span style="font-weight: 600;">Date De Naissance : </span>{{profile.date_of_birth}}
+                                </h5>
+                                <h5><span style="font-weight: 600;">Profession : </span>{{profile.profession}}</h5>
+                                <h5><span style="font-weight: 600;">Email : </span><a
+                                        href="mailto:{{profile.email}}">{{profile.email}}</a></h1>
+                                    {% if profile == request.user %}
+                                    <div class="row"><a href="/modify_profile/"
+                                            class="col-5 btn btn-outline-success">Modifier Mon
+                                            Compte</a>
+                                        <span class="col-2"></span><a href="#"
+                                            class="col-5 btn btn-outline-danger">Supprimer Mon Compte</a>
+                                    </div>
+                                    {% endif %}
+
+                                    <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+</section>
+{% endblock %}

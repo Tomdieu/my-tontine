@@ -1,0 +1,56 @@
+<!-- ////////////////////////////////////////////////////////////////////////////////////////
+                               START SECTION 1 - THE NAVBAR SECTION  
+/////////////////////////////////////////////////////////////////////////////////////////////-->
+<nav class="navbar-expand-lg navbar navbar-dark bg-dark shadow fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Nv Tontine
+      <img src="images/logo.png" alt="logo image">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" aria-current="page" href="{% url 'home' %}">Accuile</a></li>
+        <!-- <li class="nav-item"><a class="nav-link" href="#">Tontine</a></li> -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            Tontine
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="{% url 'tontines' %}">Afficher Les Tontine</a></li>
+            <li><a class="dropdown-item" href="{% url 'create_tontine' %}">Creer Tontine</a></li>
+          </ul>
+        </li>
+        <!-- <li class="nav-item"><a class="nav-link" href="#">Reunion</a></li> -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            Reunion
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="{% url 'reunions' %}">Affchier Les Reunion</a></li>
+            <li><a class="dropdown-item" href="{% url 'create_reunion' %}">Creer Une reunion</a></li>
+          </ul>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'profile' user.id %}">Profile</a></li>
+        <li class="nav-item">
+          <a href="{% url 'mes_notification' %}" class="nav-link">
+            Message <span class="badge badge-light bg-dark" id="msg"></span>
+          </a>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
+
+        {% else %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a>
+        <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a>
+        </li>
+        {% endif %}
+
+      </ul>
+    </div>
+  </div>
+</nav>

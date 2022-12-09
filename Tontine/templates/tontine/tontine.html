@@ -1,0 +1,229 @@
+{% extends 'tontine/base.html' %}
+{% block content %}
+{% load static %}
+<style>
+    input[type=text] {
+        width: 60%;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        background-image: url("{% static 'images/find.svg' %}");
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+    }
+
+    input[type=text]:focus {
+        width: 65%;
+    }
+
+
+    input[type=submit],
+    input[type=button] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+
+    .container {
+
+        padding: 5px 5px 5px 5px;
+        display: block;
+        justify-content: center;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th,
+    td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #303331;
+        color: white;
+    }
+</style>
+<div class="container">
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <input type="hidden" name="idtontine" value="{{result.id}}">
+        <center><input type="text" name="nom_membre" id="membreInfo" placeholder="Rechercher Un Membre"
+                title="entrez les information a rechercher sur un membre">
+            <input type="button" value="Search" onclick="getMember()">
+        </center>
+    </div><br>
+    <div class="card" id="#">
+        <h1 class="card-header"><b>Tontine</b></h1>
+        <div class="card-body">
+            <h5 class="card-title"><span style="font-weight: 900;">{{result.nom}}</span></h5>
+            <p class="card-text">
+            <h5><span style="font-weight: 600;">Slogan</span> : {{result.slogan}}</h5>
+            <h5><span style="font-weight: 600;">Reglement Interieur</span> : </h5>
+            <h6 class="text-justify form-control" style="padding:20px">
+                {{result.reglement_interieur}}
+            </h6>
+            <h5><span style="font-weight: 600;">Nombre Participant</span> : {{nombre}}</h5>
+            <h5><span style="font-weight: 600;">Membre</span> :</h5>
+
+            {% if membre %}
+            <div style="overflow-x: auto;height:200px">
+                <table id="membreTable">
+                    <tr>
+                        <th style="width:100px">
+                            Nom Prenom
+                        </th>
+
+                        <th style="width:50px">
+                            Email
+                        </th>
+                        <th>
+                            Numeros Telephone
+                        </th>
+                        <th>Profession</th>
+                        <th>Membre depuis</th>
+                    </tr>
+                    {% for m in membre %}
+                    <tr>
+                        <td>
+
+                            <a href="{% url 'profile' m.id %}">{{m.username}} {{m.surname}}</a>
+                        </td>
+
+                        <td>
+                            <a href="mailto:{{m.email}}">{{m.email}}</a>
+                        </td>
+                        <td>
+                            {{m.telephone}}
+                        </td>
+                        <td>{{m.profession}}</td>
+                        <td>{{m.date_integration|timesince}}</td>
+                    </tr>
+
+                    {% endfor %}
+                </table>
+
+            </div>
+            {% endif %}
+            </p>
+            <hr />
+            <style>
+                h5 {
+                    font-weight: 900;
+                }
+            </style>
+            <script>
+
+                function getMember() {
+                    var input, filter, table, tr, td, i;
+                    input = document.getElementById("membreInfo");
+                    filter = input.value.toUpperCase();
+                    table = document.getElementById("membreTable");
+                    tr = table.getElementsByTagName("tr");
+                    for (i = 0; i < tr.length; i++) {
+                        td = tr[i].getElementsByTagName("td")[0];
+                        if (td) {
+                            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                tr[i].style.display = "";
+                            } else {
+                                tr[i].style.display = "none";
+                            }
+                        }
+                    }
+                }
+
+            </script>
+            <div class="row-2">
+                <h5>Commiter</h5>
+                <a href="#" class="btn btn-outline-dark">🧐Affichier Les Membre Du Committer</a><br />
+            </div>
+            <div class="row-2">
+                <h5>👥Reunion👬</h5>
+                <a href="{% url 'create_meeting' result.id %}" class="btn btn-outline-dark">➕Creer Une Reunion</a>
+                <a href="#" class="btn btn-outline-dark">Affichier Reunion</a><br />
+            </div>
+            <hr />
+            <div>
+                <h5>💳Cotisation💳</h5>
+                <a href="{% url 'create_cotisation' result.id %}" class="btn btn-outline-dark">➕Creer Une
+                    Cotisation<span style="color:rgb(99, 218, 99)">💲</span></a>
+                {% if cotisation %}
+                <a href="#" class="btn btn-outline-dark">Contribuer Une Cotisation💲</a>
+                <a href="#" class="btn btn-light">Affichier Les Cotisation Effecteur</a><br />
+                {% endif %}
+            </div>
+            <hr />
+            <div>
+                <h5>💸Fond 💰Tontine💵</h5>
+                <a href="{% url 'create_fond' result.id %}" class="btn btn-outline-dark">🏧Creer Un Fond</a>
+                {% if fond %}
+                <a href="#" class="btn btn-light">Affichier Les Fond</a><br />
+                {% endif %}
+            </div>
+            <hr />
+            <div>
+                <h5>Election Tontine</h5>
+                {# {% url 'deposer_candidature' result.id %} #}
+                {% if result.creator_id == request.user.id %}
+                <a href="{% url 'creer_election' result.id %}" class="btn btn-outline-dark">Creer Une Election</a>
+
+                {% endif %}
+                {% if election %}
+                <a href="/deposer_canidature/{{result.id}}/" class="btn btn-outline-dark">Deposer Une Canidature Pour
+                    Une
+                    Election</a>
+                <a href="{% url 'select_election' result.id %}" class="btn btn-outline-dark">🚶Participer A Une
+                    Election</a>
+                <a href="{% url 'resultat_election' result.id %}" class="btn btn-outline-dark">🧐Voir Les Resultat✊</a>
+                {% if candidature|length == 1 %}
+                <a href="#" class="btn btn-outline-dark">Supprimer Ma Candidature</a>
+                {% elif candidature|length > 1%}
+                <a>➖Supprimer Mes Candidature❌</a>
+                {% endif %}
+                {% endif %}
+            </div>
+            <hr />
+            <div>
+                <h5>Pret Tontine</h5>
+                <a href="#" class="btn btn-outline-dark">🤲Demander Un Pret💵</a>
+            </div>
+            <hr />
+
+            <div>
+                <span class="bi-film"><img src="{% static 'images/msg.png' %}" style="width: 50px;padding:0" /></span>
+                <a href="#" class="btn btn-success" id="kkkk" style="margin:0">Chat</a>
+            </div>
+            <br />
+            <hr />
+            <a href="#" class="btn btn-success">Telecharger</a>
+        </div>
+    </div>
+
+</div>
+</div>
+
+
+
+{% endblock %}

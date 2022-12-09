@@ -1,0 +1,35 @@
+{% extends 'tontine/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <br>
+    <br>
+    <br />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <h1 style="font-size: 2em;">Creer Une Reunion Pour L'association {{name.nom}}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="idtontine" value="idtontine">
+        {% for value in form %}
+
+        {% if value.label == 'Date de début' %}
+        <p>Date de début<input type="date" name="date" required id="id_date"></p>
+        {% elif value.label == 'Montant Cotisation' %}
+        <p>Montant Cotisation<input type="number" name="montant" min="0" step="any" required id="id_montant"></p>
+        {% else %}
+        <p>{{value.label}}{{value}}</p>
+        {% endif %}
+        {% endfor %}
+        <br />
+        <center>
+            <input type="submit" value="Creer Reunion" style="width: 96%;">
+
+        </center>
+        <!-- <script>
+            $("input", "textarea").addClass("form-control");
+        </script> -->
+    </form>
+</div>
+
+{% endblock %}

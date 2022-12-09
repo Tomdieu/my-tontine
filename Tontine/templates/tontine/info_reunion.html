@@ -1,0 +1,33 @@
+{% extends 'tontine/base.html' %} {% block content %}
+<br />
+<br />
+<br />
+<br />
+<section id="reunion" style="padding: 30px;">
+    <div class="container">
+        <h1>List Reunion</h1>
+    </div>
+    {% for reunion in reunions %}
+    <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    {{reunion}}
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <strong>Date Reunion : </strong>{{reunion.date}}<br>
+                    <strong>Motif : </strong>{{reunion.motif}}<br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    {% endfor %}
+
+
+</section>
+{% endblock %}

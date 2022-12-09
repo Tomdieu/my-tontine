@@ -1,0 +1,59 @@
+{% extends 'tontine/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% load static %}
+<link href="{% static 'css/style.css' %}" rel='stylesheet'>
+<div class="container" style="width:90%">
+    <br>
+    <br>
+    <br />
+    <h2 style="padding-left: 60px;">Recapitulatif des election</h2>
+    <ul>
+        {% for elect in el %}
+        <!-- <li>{{elect}}</li> -->
+
+        <div class="card">
+            <h5 class="card-header"><b>{{elect.election}}</b></h5>
+            <div class="card-body">
+                {% if elect.candidat %}
+                <h5 class="card-title">Candidat</h5>
+
+                <ul>
+                    {% for item in elect.candidat %}
+                    <li><a href="{% url 'profile' item.id_user.id %}" class="nv-btn nv-dark"
+                            title="Voix Le Profile du candidat">
+                            {% if item.id_user == request.user %}
+                            Vous
+                            {% else %}
+                            {{item}}
+                            {% endif %}
+                        </a><span style="font-weight: bold;">
+                            Poste :
+                        </span> {{item.poste_canidat}} <span><b>Nombre de Voix : </b> {{item.nombre_de_voix}}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <h5>Particpant</h5>
+                <ul>
+                    {% for pa in elect.votant %}
+                    <li>{{pa.member}}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <h1>Aucun Candidat</h1>
+                {% endif %}
+                <br />
+                {% if elect.candidat|length > 0 %}
+                <a href="#" class="btn btn-primary">Affichier Candidat Par Voix Et Obtener Les Membre du committe</a>
+                {% endif %}
+            </div>
+        </div>
+        <br />
+        {% endfor %}
+        <br />
+
+    </ul>
+
+</div>
+
+{% endblock %}

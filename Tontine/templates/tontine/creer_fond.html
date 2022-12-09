@@ -1,0 +1,43 @@
+{% extends 'tontine/base.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<br />
+<br />
+<br />
+<div>
+    <style>
+        .errorlist {
+            color: red;
+        }
+
+        .errorlist>li {
+            color: red;
+        }
+
+        input[type=number] {
+            width: 99%;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-left: 4px;
+            margin-right: 10px;
+            background-color: white;
+            padding: 12px 20px 12px 10px;
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+        }
+    </style>
+    <center>
+        <h3>Creer Un Fond</h3>
+    </center>
+    <form method="post">
+        {% csrf_token %}
+        {{form}}
+        <br>
+        <br>
+        <center><input type="submit" value="Modify" style="width:100%"></center>
+    </form>
+</div>
+{% endblock %}

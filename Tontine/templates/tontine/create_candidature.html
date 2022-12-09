@@ -1,0 +1,90 @@
+{% extends 'tontine/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <br>
+    <br>
+    <br />
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+            border: 1px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        @media screen and (max-width:480px) {
+
+            th,
+            td,
+            h5 {
+                font-size: 10pt;
+            }
+        }
+    </style>
+    {% if election %}
+    <h1>Deposer Une Canidature</h1>
+    <h5>a l'association <b>{{tontine}}</b></h5>
+
+    <div style="overflow-x: auto;">
+        <table>
+            <tr>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Terme
+                </th>
+                <th>
+                    Temp Renouvelable
+                </th>
+                <th>
+
+                </th>
+            </tr>
+            {% for item in elect %}
+            <tr>
+                <td>
+                    {{item.elections.date}}
+                </td>
+                <td>
+                    {{item.elections.terme}}
+                </td>
+                <td>
+                    {{item.elections.temp_renouvelable}}
+                </td>
+                <td>
+                    {% if item.isCandidat %}
+                    <h5 class="text-danger">Vous avez deja deposer votre candidature</h5>
+                    {% else %}
+                    <a href="{% url 'confirmer_depos' item.elections.id %}" class="btn btn-success">Deposer
+                        Canidature</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    </form>
+    {% else %}
+    <h1>Desoler ! aucun election n'as ete lancer !</h1>
+    {% endif %}
+</div>
+
+{% endblock %}

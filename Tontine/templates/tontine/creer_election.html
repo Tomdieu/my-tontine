@@ -1,0 +1,120 @@
+{% extends 'tontine/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+    input[type=text],
+    input[type=password],
+    input[type=file],
+    input[type=date],
+    input[type=email],
+    select {
+        width: 99%;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        margin-left: 4px;
+        margin-right: 10px;
+        background-color: white;
+        padding: 12px 20px 12px 10px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+    }
+
+    input[type=text]:focus {
+        border: 3px solid rgba(6, 201, 226, 0.795);
+    }
+
+    label,
+    h5,
+    h1 {
+        padding-left: 4px;
+    }
+
+    input[type=submit],
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+
+    .container {
+        width: 90%;
+        padding: 5px 5px 5px 5px;
+        display: block;
+        justify-content: center;
+    }
+
+    @media screen and (min-width:480px) {
+        .container {
+            width: 50%;
+            padding: 5px 5px 5px 5px;
+            display: block;
+        }
+
+        input {
+
+            margin-right: 10px;
+        }
+    }
+</style>
+<div class="container">
+    <br>
+    <br>
+    <br />
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}}" role="alert">
+        {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
+    <h1>Creer une Election</h1>
+    <h5 style="font-size: 0.9rem;">Pour l'association <b>{{nom}}</b></h5>
+    <form method="POST">
+        {% csrf_token %}
+        {% for item in form %}
+        {% if item.label == "Date De L'election" %}
+        <p><label>Date De L&#x27;election</label><input type="date" name="date" required id="id_date">
+            {% if item.help_text %}
+            <span style="padding-left: 10px;" class="form-text text-muted">{{item.help_text}}</span>
+            {% endif %}
+        </p>
+        {% elif item.label == "Date fin canditure" %}
+        <p><label>Date fin canditure</label><input type="date" name="date_fin_canditure" required
+                id="id_date_fin_canditure">
+            {% if item.help_text %}
+            <span style="padding-left: 10px;" class="form-text text-muted">{{item.help_text}}</span>
+            {% endif %}
+        </p>
+        {% else %}
+        <p><label>{{item.label}}</label>{{item}}
+            {% if item.help_text %}
+            <span style="padding-left: 10px;" class="form-text text-muted">{{item.help_text}}</span>
+            {% endif %}
+        </p>
+        {% endif %}
+
+        {% endfor %}
+        <input name="idtontine" type="hidden" value="{{id}}">
+        <p class="mt-5 mb-3 text-muted" style="text-align: center;font-size:0.8rem">Nb : La date de l'election a pour
+            format YYYY-MM-DD
+        </p>
+        <input type="submit" value="Creer L'election">
+        <!-- <button class="btn btn-secondary" type="submit">Creer Election</button> -->
+
+        <!-- <script>
+            $("input", "textarea").addClass("form-control");
+        </script> -->
+    </form>
+</div>
+
+{% endblock %}

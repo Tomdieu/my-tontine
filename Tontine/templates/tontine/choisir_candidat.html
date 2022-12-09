@@ -1,0 +1,113 @@
+{% extends 'tontine/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <br>
+    <br>
+    <br />
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+    {{query}}
+    {{xxx}}
+    {{q}}
+    {% if candidat %}
+    <div style="overflow-x: auto;margin:0;padding:0">
+        <table>
+            <tr>
+                <th>
+                    Nom
+                </th>
+                <th>
+                    Poste
+                </th>
+                <th style="text-align: center;">Nombre de Voix</th>
+                <th>Voter</th>
+            </tr>
+
+            {% for cand in cand_elec %}
+            <tr>
+                <td title="affichier le profile du candidat">
+                    {% if cand.candidat.id_user == request.user %}
+                    <a href="{% url 'profile' cand.candidat.id_user.id %}">Vous</a>
+                    {% else %}
+                    <a href="{% url 'profile' cand.candidat.id_user.id %}">{{cand.candidat.id_user|truncatechars:10}}</>
+                        {% endif %}
+                </td>
+                <td>
+                    {{cand.candidat.poste_canidat}}
+                </td>
+                <td style="text-align: center;">
+                    {{cand.candidat.nombre_de_voix}}
+                </td>
+                <td>
+                    {% if cand.hasvote %}
+                    <label class="text-danger">Vous avez deja voter</label>
+                    {% else %}
+                    <a href="/confirmer_vote/?idelection={{election.id}}&idcandidat={{cand.candidat.id}}"
+                        class="btn btn-success form-control">Vote</a>
+                    {% endif %}
+                </td>
+            </tr>
+            <div class="collapse card">
+                <div class="card-header">
+                    <p>hell</p>
+                </div>
+                <div class="card-body">
+                    <p>
+                        Hello world
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </table>
+    </div>
+    <br />
+    <div class="w3-container">
+
+        {% for item in cand_elec %}
+        <div class="w3-card w3-display-container" style="width:100%">
+            <img src="{{item.candidat.id_user.profile.url}}" alt="Person" style="width:100%">
+            <div class="w3-container">
+                <h4><b>{{item.candidat.id_user}}</b></h4>
+                <h4><b>Poste</b> : {{item.candidat.poste_canidat}}</h4>
+                <h4><b>Nombre de voix : </b>{{item.candidat.nombre_de_voix}}</h4>
+                <div class="w3-container" style="padding:20px">
+                    {% if item.hasvote %}
+                    <label class="text-danger">Vous avez deja voter</label>
+                    {% else %}
+                    <a href="/confirmer_vote/?idelection={{election.id}}&idcandidat={{cand.candidat.id}}"
+                        class="btn btn-success form-control">Voter</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <h1>Desoler Aucun Candidat</h1>
+    {% endif %}
+</div>
+
+{% endblock %}

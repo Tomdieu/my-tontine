@@ -1,0 +1,110 @@
+{% extends 'tontine/base.html' %}
+{% load static %}
+{% block content %}
+<br />
+<br />
+<br />
+<section id="reunion" style="padding: 30px;">
+    <div class="container-fluid">
+        <h1>Listes Des Different tontines</h1>
+    </div>
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{message.tags}}" role="alert">
+        {{message}}
+    </div>
+    {% endfor %}
+    {% endif %}
+    <style>
+        input[type=text] {
+            width: 60%;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: white;
+            background-image: url("{% static 'images/find.svg' %}");
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            padding: 12px 20px 12px 40px;
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+        }
+
+        input[type=text]:focus {
+            width: 70%;
+        }
+
+
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+
+            padding: 5px 5px 5px 5px;
+            display: block;
+            justify-content: center;
+        }
+    </style>
+    <div class="container">
+        <form>
+            <center><input type="text" name="nom_tontine" placeholder="Rechercher Une Tontine"
+                    title="entrez le nom de la tontine">
+                <input type="submit" value="Submit">
+            </center>
+        </form>
+    </div>
+    <br>
+
+    {% for tontine in tontines %}
+    <div class="accordion" id="accordionExample{{forloop.counter}}">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse{{forloop.counter}}" aria-expanded="true"
+                    aria-controls="collapse{{forloop.counter}}">
+                    {{tontine.nom}}
+                </button>
+            </h2>
+            <div id="collapse{{forloop.counter}}" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    <strong>Date Creation : {{tontine.date_creation|timesince}}</strong><br>
+                    <strong>Slogan : {{tontine.slogan}}</strong><br />
+                    <strong>Relegement Interieur : </strong>
+                    <p class="form-control" style="overflow: auto;">{{tontine.reglement_interieur}}</p>
+                </div>
+            </div>
+            {% if user.id == tontine.u %}
+            <div class="container" style="padding: 10px;">
+                <a class="btn btn-primary" href="{% url 'tontine' tontine.id %}">
+                    Plus d'info
+                </a>
+            </div>
+            {% else %}
+            <div class="container" style="padding: 10px;">
+                <a class="btn btn-primary" href="{% url 'envoyer_unenotification' tontine.id %}">
+                    Demande D'invitation
+                </a>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+    <br />
+    <br />
+    {% endfor %}
+
+
+</section>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'tontine/base.html' %} {% block content %}
+<br />
+<br />
+<br />
+<br />
+<section id="reunion" style="padding: 30px;">
+    <div class="container">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{message.tags}}" role="alert">
+            {{message}}
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+        <h3>Voter Un Candidat a {{election}}</h3>
+        <style>
+            tr,
+            th,
+            td {
+                border: 1px solid #ddd;
+            }
+
+            li {
+                list-style: none;
+            }
+        </style>
+        <br />
+        <ul>
+            <li><a href="{% url 'voter_president' election.id %}" class="btn btn-outline-success">Voter Un President</a>
+            </li>
+            <hr>
+            <li><a class="btn btn-outline-success" href="{% url 'voter_secretaire' election.id %}">Voter Un
+                    Secretaire</a></li>
+            <hr>
+            <li><a class="btn btn-outline-success" href="{% url 'voter_tresorier' election.id%}">Voter Un Tresorier</a>
+            </li>
+            <hr>
+            <li><a class="btn btn-outline-success" href="{% url 'voter_commisaire' election.id %}">Voter Un Commissaire
+                    au compte</a>
+            </li>
+            <hr>
+        </ul>
+
+    </div>
+</section>
+{% endblock %}

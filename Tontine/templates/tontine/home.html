@@ -1,0 +1,47 @@
+{% include 'tontine/base.html' %} {% block one %}
+<section id="home" class="intro-section">
+    <div class="container">
+        <div class="row align-items-center text-white">
+            <!-- START THE CONTENT FOR THE INTRO  -->
+            <div class="col-md-6 intros text-start">
+                <h1 class="display-2">
+                    <span class="display-2--intro">Welcome <br>to Nv Tontine</span>
+                    <span class="display-2--description lh-base">
+                        Gerer vos diiferent <span style="font-weight: bolder;">tontine</span> en un clique
+                    </span>
+                </h1>
+                <a href="#" style="text-decoration: none;">
+                    <button type="button" class="rounded-pill btn-rounded">Affichier Mes Tontine
+                        <span><i class="fas fa-arrow-right"></i></span>
+                    </button>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <div class="container w3-animate-left">
+                    {% if user.is_authenticated %}
+                    <h1 style="display: inline-block;">Utilisateur : </h1>
+                    <h3 style="display:inline-block"> <span style="font-size: larger;">{{user}}🍀</span></h3>
+                    <h4> Membre dans {{nb}} association</h4>
+                    {% if association %}
+                    <ul>
+                        {% for tontine in association %}
+                        <li><a href="{% url 'tontine' tontine.id_tontine.id %}">{{tontine.id_tontine.nom}}</a></li>
+                        {% endfor %}
+                    </ul>
+                    <p>Nombre de Tontine Creer : <span>{{number}}</span></p>
+                    {% endif %}
+                    {% else %}
+                    <h1>It Seem you are not login!</h1>
+                    <a class="btn btn-primary" href="{% url 'login' %}">Clique to Logged in to your account</a><br><br>
+                    <a class="btn btn-primary" href="{% url 'register' %}">Clique to create your account</a> {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#ffffff" fill-opacity="1"
+            d="M0,160L48,176C96,192,192,224,288,208C384,192,480,128,576,133.3C672,139,768,213,864,202.7C960,192,1056,96,1152,74.7C1248,53,1344,107,1392,133.3L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+        </path>
+    </svg>
+</section>
+{% endblock %}
