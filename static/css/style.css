@@ -1,0 +1,124 @@
+.img-container {
+    float: left;
+    width: 33.33%;
+    padding: 5px;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+    border:1px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+input[type=text],
+input[type=password],
+input[type=file],
+input[type=date],
+input[type=number],
+input[type=time], input[type=email], textarea,select{
+    width: 99%;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-left: 4px;
+    margin-right: 10px;
+    background-color: white;
+    padding: 12px 20px 12px 10px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+    border: 3px solid rgba(6, 201, 226, 0.795);
+}
+
+label {
+    padding-left: 4px;
+}
+
+input[type=submit],
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.container {
+    width: 99%;
+    padding: 5px 5px 5px 5px;
+    display: block;
+    justify-content: center;
+}
+
+@media screen and (min-width:480px) {
+    .container {
+        width: 80%;
+        padding: 5px 5px 5px 5px;
+        display: block;
+    }
+
+    input {
+
+        margin-right: 10px;
+        font-size: 12pt;
+    }
+
+    h1{
+        font-size: medium;
+    }
+    input[type=text],
+input[type=password],
+input[type=file],
+input[type=date],
+input[type=number],
+input[type=time], input[type=email], textarea,select{
+    font-size:12px;
+}    
+}
+
+.nv-btn{
+    padding:10px;
+    text-align: center;
+    border: 0.5px solid rgb(233, 222, 222);
+    text-decoration: none;
+    border-radius: 5px 5px 5px;
+    margin:4px 4px 4px 4px;
+    margin-right: 2px;
+    display: inline-block;
+}
+
+.nv-btn:hover{
+    color: white;
+    background-color:rgba(30, 32, 30, 0.836);
+}
+
+.nv-dark{
+    background-color:rgb(0, 0, 0);
+    color:white;
+}
